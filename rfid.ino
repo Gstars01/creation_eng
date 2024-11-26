@@ -47,7 +47,6 @@ void loop() {
   Serial.println();
 
   // UID 정보를 Bluetooth로 전송
-  bluetooth.print("UID: ");
   bluetooth.println(uid);
   Serial.println("UID 정보 HC-06으로 전송 완료");
 
