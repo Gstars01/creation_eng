@@ -31,7 +31,7 @@ void setup() {
   output = createWriter("C:/temp/e6a8c849.txt");
   data = quantities[1];
   output.println("\t\te6a8c849 : arduino\n\n");
-  output.println(data);s
+  output.println(data);
   output.close();
   output = createWriter("C:/temp/20a545a7.txt");
   output.println("\t\20a545a7 : mouse\n\n");
