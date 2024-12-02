@@ -20,15 +20,24 @@ int incomingQuantity = -1; // -1로 초기화하여 비어 있는 상태를 나�
 void setup() {
   size(600, 400);  // 창 크기 설정
   s = new Server(this, 12345);  // 서버 생성, 포트 12345
+  
+  
+  /// 파일 생성 
   PrintWriter output = createWriter("C:/temp/49cae429.txt");
   int data = quantities[0];
+  output.println("\t\t49cae429 : computer\n\n");
   output.println(data);
+  output.close();
   output = createWriter("C:/temp/e6a8c849.txt");
   data = quantities[1];
-  output.println(data);
+  output.println("\t\te6a8c849 : arduino\n\n");
+  output.println(data);s
+  output.close();
   output = createWriter("C:/temp/20a545a7.txt");
+  output.println("\t\20a545a7 : mouse\n\n");
   data = quantities[2];
   output.println(data);
+  output.close();
 }
 
 
@@ -37,6 +46,7 @@ void setup() {
 void draw() {
   background(255);  // 흰색 배rud
   displayInfo(0);
+  delay(1000);
   
   c = s.available();  // 클라이언트 연결 확인
   if (c != null) {
@@ -146,10 +156,22 @@ String getProduct(String uid) {
    return "Unknown"; 
 }
 
-int getQuantity(String product,int a) {
+int getQuantity(String product,int a) {  ///////////////////////////////////////
    for (int i = 0; i < products.length; i++) {
      if (products[i].equalsIgnoreCase(product)) {
        quantities[i] = quantities[i]+a;
+       if(i==0){
+           String text = quantities[i] + "";
+           appendToFile("C:/temp/49cae429.txt", text);
+       }
+       else if(i==1){
+           String text = quantities[i] + "";
+           appendToFile("C:/temp/e6a8c849.txt", text);
+       }
+       else if(i==2){
+           String text = quantities[i] + "";
+           appendToFile("C:/temp/20a545a7.txt", text);
+       }
        return quantities[i]; 
      }
    }
@@ -188,4 +210,16 @@ void updateQuantities(String productName, int updatedQuantity) {
             break;
         }
     }
+}
+
+void appendToFile(String filePath, String data) {
+  try {
+    // FileWriter 두 번째 매개변수로 true 전달하면 append 모드 활성화
+    BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true));
+    writer.write(data);
+    writer.newLine();  // 줄바꿈
+    writer.close();  // 파일 닫기
+  } catch (IOException e) {
+    println("파일 쓰기 오류: " + e.getMessage());
+  }
 }
